@@ -1,0 +1,64 @@
+---
+title: "In-depth Fine Tuning: PEFT with LoRA & QLoRA"
+date: Jun 1, 2023
+description: In neural networks, the weight matrices consist of floating-point numbers, typically stored in the 32-bit floating-point data type.
+---
+
+import Image from "next/image";
+
+<div className="flex flex-col items-center gap-4">
+
+# In-depth Fine Tuning: PEFT with LoRA & QLoRA
+
+  <small>[Severus](https://aidenybai.com) JUN 1 2023</small>
+</div>
+
+---
+
+##
+
+<div style={{ position: "relative" }}>
+  <Image
+    src="/static/img/blog-img/weights.png"
+    alt="neural netowrk img"
+    height="300"
+    width="1000"
+    priority
+  />
+</div>
+
+Fine-tuning is a crucial step in unlocking the full potential of large language models (LLMs). It involves adapting the pre-trained LLM to a specific task or domain, resulting in significantly improved performance on that task. However, traditional fine-tuning methods can be computationally expensive and memory-intensive, limiting their applicability on resource-constrained platforms.
+
+To address this challenge, researchers have developed [parameter-efficient fine-tuning](https://huggingface.co/docs/peft/index) (PEFT) techniques. These techniques aim to achieve similar or even better performance than traditional fine-tuning while significantly reducing the number of parameters and memory footprint. Among the most promising PEFT approaches are [LoRA](https://huggingface.co/docs/peft/conceptual_guides/lora) (Low-Rank Adaptation) and [QLoRA](https://huggingface.co/blog/4bit-transformers-bitsandbytes) (Quantized LoRA).
+
+In neural networks, the weight matrices consist of floating-point numbers, typically stored in the 32-bit floating-point data type. Computers internally represent these floating-point values using binary code, achieved by flipping bits for the sign, exponent, and significant. This binary representation is fundamental to accurately handle and process numerical data within the neural network architecture.
+
+
+
+To reduce precision, a common approach is adjusting the data types. One option is shifting to half precision, utilizing only half the bits for number representation, cutting memory needs in half. However, there's a trade-off, where precision is sacrificed.
+
+In the context of single-precision, 32-bit format, a single bit is allocated to denote the sign of the number, either positive or negative. Eight bits are dedicated to the exponent, which, given its binary nature, represents 2 raised to a specific power. The remaining 23 bits serve to encode the digits composing the number, referred to as the significant. In half-precision (16-bit) further reduces the allocated space, employing merely five bits for the exponent and ten for the digits (mantissa).
+
+In the following example, we have the value $1 - 2^{-24} \approxeq 0.99999994$ in a 32-bit system. Upon reducing the precision by half, the resulting value becomes 0.99951172. This adjustment illustrates the impact of precision reduction on numerical representation.
+<br />
+<div style={{ position: "relative" }}>
+  <Image
+    src="/static/img/blog-img/floating_points.png"
+    alt="neural netowrk img"
+    height="300"
+    width="1000"
+    priority
+  />
+</div>
+
+<br />
+<div style={{ position: "relative" }}>
+  <Image
+    src="/static/img/blog-img/qlora.png"
+    alt="neural netowrk img"
+    height="300"
+    width="1000"
+    priority
+  />
+</div>
+
